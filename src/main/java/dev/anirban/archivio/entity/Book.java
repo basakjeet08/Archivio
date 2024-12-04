@@ -1,9 +1,11 @@
 package dev.anirban.archivio.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,7 +18,7 @@ import java.sql.Timestamp;
 public class Book {
 
     public enum BookStatus {
-        AVAILABLE, ISSUED
+        AVAILABLE, REQUESTED, ISSUED
     }
 
     public enum Genre {
@@ -59,4 +61,18 @@ public class Book {
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
+
+    @OneToMany(
+            mappedBy = "book",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonIgnore
+    private List<BookIssue> issuedList;
+
+    public void addToIssueList(BookIssue issue) {
+        issuedList.add(issue);
+        issue.setBook(this);
+    }
 }

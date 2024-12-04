@@ -16,4 +16,7 @@ public class UrlConstants {
     public static final String FIND_BOOK_QUERY = "/books";
     public static final String PUT_BOOK = "/books";
     public static final String DELETE_BOOK_BY_ID = "/books/{id}";
+
+    // Book Issue Endpoints
+    public static final String CREATE_BOOK_ISSUE = "/book_issues";
 }

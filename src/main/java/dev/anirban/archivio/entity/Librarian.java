@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -46,6 +47,30 @@ public class Librarian {
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
+
+    @OneToMany(
+            mappedBy = "approvedBy",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST}
+    )
+    private List<BookIssue> approvedBookIssues;
+
+    @OneToMany(
+            mappedBy = "returnedBy",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST}
+    )
+    private List<BookIssue> returnedBookIssues;
+
+    public void addApprovedBooks(BookIssue issue) {
+        approvedBookIssues.add(issue);
+        issue.setApprovedBy(this);
+    }
+
+    public void addReturnedBooks(BookIssue issue) {
+        returnedBookIssues.add(issue);
+        issue.setReturnedBy(this);
+    }
 
     public LibrarianDto toLibrarianDto() {
         return LibrarianDto

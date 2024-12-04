@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +38,7 @@ public class MemberService {
                 .roles(UserRole.MEMBER)
                 .createdAt(Timestamp.valueOf(LocalDateTime.now()))
                 .updatedAt(Timestamp.valueOf(LocalDateTime.now()))
+                .booksBorrowed(new ArrayList<>())
                 .build();
 
         return memberRepo.save(member);

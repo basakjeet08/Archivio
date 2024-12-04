@@ -1,11 +1,13 @@
 package dev.anirban.archivio.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.anirban.archivio.dto.response.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -46,6 +48,20 @@ public class Member {
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
+
+    @OneToMany(
+            mappedBy = "requester",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonIgnore
+    private List<BookIssue> booksBorrowed;
+
+    public void addBooksBorrowed(BookIssue issue) {
+        booksBorrowed.add(issue);
+        issue.setRequester(this);
+    }
 
     public MemberDto toMemberDto() {
         return MemberDto

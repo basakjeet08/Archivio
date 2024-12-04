@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 @Service
@@ -38,6 +39,8 @@ public class LibrarianService {
                 .roles(UserRole.LIBRARIAN)
                 .createdAt(Timestamp.valueOf(LocalDateTime.now()))
                 .updatedAt(Timestamp.valueOf(LocalDateTime.now()))
+                .approvedBookIssues(new ArrayList<>())
+                .returnedBookIssues(new ArrayList<>())
                 .build();
 
         return librarianRepo.save(librarian);
