@@ -10,4 +10,6 @@ public interface BookRepo extends JpaRepository<Book, Integer> {
     List<Book> findByStatus(Book.BookStatus status);
 
     List<Book> findByTitle(String title);
+
+    List<Book> findByGenre(Book.Genre genre);
 }

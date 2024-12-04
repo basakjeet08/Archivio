@@ -19,6 +19,19 @@ public class Book {
         AVAILABLE, ISSUED
     }
 
+    public enum Genre {
+        BIOGRAPHY,
+        FANTASY,
+        FICTION,
+        HISTORY,
+        HORROR,
+        MYSTERY,
+        NON_FICTION,
+        ROMANCE,
+        SCIENCE_FICTION,
+        YOUNG_ADULT
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -36,6 +49,10 @@ public class Book {
     @Column(name = "status", nullable = false)
     @Enumerated(value = EnumType.STRING)
     private BookStatus status;
+
+    @Column(name = "genre", nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private Genre genre;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;

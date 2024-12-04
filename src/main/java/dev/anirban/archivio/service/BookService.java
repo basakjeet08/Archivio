@@ -24,6 +24,7 @@ public class BookService {
                 .publicationYear(book.getPublicationYear())
                 .edition(book.getEdition())
                 .status(Book.BookStatus.AVAILABLE)
+                .genre(book.getGenre())
                 .createdAt(Timestamp.valueOf(LocalDateTime.now()))
                 .updatedAt(Timestamp.valueOf(LocalDateTime.now()))
                 .build();
@@ -47,6 +48,10 @@ public class BookService {
 
     public List<Book> findByTitle(String title) {
         return bookRepo.findByTitle(title);
+    }
+
+    public List<Book> findByGenre(Book.Genre genre) {
+        return bookRepo.findByGenre(genre);
     }
 
     public Book update(Book book) {

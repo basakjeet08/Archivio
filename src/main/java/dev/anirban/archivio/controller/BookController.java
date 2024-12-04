@@ -30,7 +30,8 @@ public class BookController {
     @GetMapping(UrlConstants.FIND_BOOK_QUERY)
     public ResponseWrapper<List<Book>> findBook(
             @RequestParam(name = "status", required = false) Book.BookStatus status,
-            @RequestParam(name = "title", required = false) String title
+            @RequestParam(name = "title", required = false) String title,
+            @RequestParam(name = "genre", required = false) Book.Genre genre
     ) {
         List<Book> data;
 
@@ -38,6 +39,8 @@ public class BookController {
             data = service.findByStatus(status);
         else if (title != null)
             data = service.findByTitle(title);
+        else if (genre != null)
+            data = service.findByGenre(genre);
         else
             data = service.findAll();
 
