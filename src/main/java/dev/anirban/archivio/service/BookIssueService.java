@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,5 +45,9 @@ public class BookIssueService {
         requestedBook.setStatus(Book.BookStatus.REQUESTED);
 
         return bookIssueRepo.save(newIssue);
+    }
+
+    public List<BookIssue> findByStatus(BookIssue.BookIssueStatus status) {
+        return bookIssueRepo.findByStatus(status);
     }
 }
