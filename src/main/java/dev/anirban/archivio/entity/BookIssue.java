@@ -1,5 +1,6 @@
 package dev.anirban.archivio.entity;
 
+import dev.anirban.archivio.dto.response.BookIssueDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -74,4 +75,20 @@ public class BookIssue {
     )
     @JoinColumn(name = "returned_by_id")
     private Librarian returnedBy;
+
+    public BookIssueDto toBookIssueDto() {
+        return BookIssueDto
+                .builder()
+                .id(id)
+                .issueDate(issueDate)
+                .dueDate(dueDate)
+                .returnDate(returnDate)
+                .fine(fine)
+                .status(status)
+                .book(book.toBookDto())
+                .requester(requester.toMemberDto())
+                .approvedBy(approvedBy == null ? null : approvedBy.toLibrarianDto())
+                .returnedBy(returnedBy == null ? null : returnedBy.toLibrarianDto())
+                .build();
+    }
 }

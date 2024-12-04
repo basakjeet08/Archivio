@@ -1,6 +1,7 @@
 package dev.anirban.archivio.controller;
 
 import dev.anirban.archivio.constants.UrlConstants;
+import dev.anirban.archivio.dto.response.BookDto;
 import dev.anirban.archivio.dto.response.ResponseWrapper;
 import dev.anirban.archivio.entity.Book;
 import dev.anirban.archivio.service.BookService;
@@ -16,45 +17,50 @@ public class BookController {
     private final BookService service;
 
     @PostMapping(UrlConstants.CREATE_BOOK)
-    public ResponseWrapper<Book> create(@RequestBody Book book) {
-        Book data = service.create(book);
+    public ResponseWrapper<BookDto> create(@RequestBody Book book) {
+        BookDto data = service.create(book).toBookDto();
         return new ResponseWrapper<>(data);
     }
 
     @GetMapping(UrlConstants.FIND_BOOK_BY_ID)
-    public ResponseWrapper<Book> findById(@PathVariable Integer id) {
-        Book data = service.findById(id);
+    public ResponseWrapper<BookDto> findById(@PathVariable Integer id) {
+        BookDto data = service.findById(id).toBookDto();
         return new ResponseWrapper<>(data);
     }
 
     @GetMapping(UrlConstants.FIND_BOOK_QUERY)
-    public ResponseWrapper<List<Book>> findBook(
+    public ResponseWrapper<List<BookDto>> findBook(
             @RequestParam(name = "status", required = false) Book.BookStatus status,
             @RequestParam(name = "title", required = false) String title,
             @RequestParam(name = "genre", required = false) Book.Genre genre
     ) {
-        List<Book> data;
+        List<Book> bookList;
 
         if (status != null)
-            data = service.findByStatus(status);
+            bookList = service.findByStatus(status);
         else if (title != null)
-            data = service.findByTitle(title);
+            bookList = service.findByTitle(title);
         else if (genre != null)
-            data = service.findByGenre(genre);
+            bookList = service.findByGenre(genre);
         else
-            data = service.findAll();
+            bookList = service.findAll();
+
+        List<BookDto> data = bookList
+                .stream()
+                .map(Book::toBookDto)
+                .toList();
 
         return new ResponseWrapper<>(data);
     }
 
     @PutMapping(UrlConstants.PUT_BOOK)
-    public ResponseWrapper<Book> update(@RequestBody Book book) {
-        Book data = service.update(book);
+    public ResponseWrapper<BookDto> update(@RequestBody Book book) {
+        BookDto data = service.update(book).toBookDto();
         return new ResponseWrapper<>(data);
     }
 
     @DeleteMapping(UrlConstants.DELETE_BOOK_BY_ID)
-    public ResponseWrapper<Book> deleteById(@PathVariable Integer id) {
+    public ResponseWrapper<BookDto> deleteById(@PathVariable Integer id) {
         service.deleteById(id);
         return new ResponseWrapper<>("Book is deleted Successfully !!");
     }

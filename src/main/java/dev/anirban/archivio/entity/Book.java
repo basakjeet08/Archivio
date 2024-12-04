@@ -1,6 +1,6 @@
 package dev.anirban.archivio.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.anirban.archivio.dto.response.BookDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -68,11 +68,22 @@ public class Book {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JsonIgnore
     private List<BookIssue> issuedList;
 
     public void addToIssueList(BookIssue issue) {
         issuedList.add(issue);
         issue.setBook(this);
+    }
+
+    public BookDto toBookDto() {
+        return BookDto
+                .builder()
+                .id(id)
+                .title(title)
+                .publicationYear(publicationYear)
+                .edition(edition)
+                .status(status)
+                .genre(genre)
+                .build();
     }
 }
