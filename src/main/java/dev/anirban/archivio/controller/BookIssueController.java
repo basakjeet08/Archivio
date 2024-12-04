@@ -34,4 +34,10 @@ public class BookIssueController {
                 .toList();
         return new ResponseWrapper<>(data);
     }
+
+    @PutMapping(UrlConstants.PUT_BOOK_ISSUE)
+    public ResponseWrapper<BookIssueDto> update(@RequestBody BookIssueRequest issueRequest) {
+        BookIssueDto data = service.update(issueRequest).toBookIssueDto();
+        return new ResponseWrapper<>(data);
+    }
 }

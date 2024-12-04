@@ -9,6 +9,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookIssueRequest {
+    private Integer id;
     private Integer bookId;
     private String requesterUsername;
+    private String approvedByEmail;
+    private String returnedByEmail;
 }

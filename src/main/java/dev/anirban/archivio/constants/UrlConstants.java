@@ -20,4 +20,5 @@ public class UrlConstants {
     // Book Issue Endpoints
     public static final String CREATE_BOOK_ISSUE = "/book_issues";
     public static final String FIND_BOOK_ISSUE_QUERY = "/book_issues";
+    public static final String PUT_BOOK_ISSUE = "/book_issues";
 }
