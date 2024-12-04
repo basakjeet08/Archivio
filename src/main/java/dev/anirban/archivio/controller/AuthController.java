@@ -4,6 +4,10 @@ package dev.anirban.archivio.controller;
 import dev.anirban.archivio.constants.UrlConstants;
 import dev.anirban.archivio.dto.request.AuthLibrarianDto;
 import dev.anirban.archivio.dto.request.AuthMemberDto;
+import dev.anirban.archivio.dto.response.TokenWrapper;
+import dev.anirban.archivio.entity.Librarian;
+import dev.anirban.archivio.entity.Member;
+import dev.anirban.archivio.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,23 +17,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
+    private final AuthService authService;
+
     @PostMapping(UrlConstants.REGISTER_LIBRARIAN)
-    public String registerLibrarian(@RequestBody AuthLibrarianDto librarian) {
-        return "Librarian Registered";
+    public Librarian registerLibrarian(@RequestBody AuthLibrarianDto librarian) {
+        return authService.registerLibrarian(librarian);
     }
 
     @PostMapping(UrlConstants.LOGIN_LIBRARIAN)
-    public String loginLibrarian(@RequestBody AuthLibrarianDto librarian) {
-        return "Librarian Logged In";
+    public TokenWrapper loginLibrarian(@RequestBody AuthLibrarianDto librarian) {
+        return authService.loginLibrarian(librarian);
     }
 
     @PostMapping(UrlConstants.REGISTER_MEMBER)
-    public String registerMember(@RequestBody AuthMemberDto member) {
-        return "Member Registered";
+    public Member registerMember(@RequestBody AuthMemberDto member) {
+        return authService.registerMember(member);
     }
 
     @PostMapping(UrlConstants.LOGIN_MEMBER)
-    public String loginMember(@RequestBody AuthMemberDto member) {
-        return "Member Logged In";
+    public TokenWrapper loginMember(@RequestBody AuthMemberDto member) {
+        return authService.loginMember(member);
     }
 }

@@ -36,4 +36,11 @@ public class LibrarianService {
 
         return librarianRepo.save(librarian);
     }
+
+
+    public Librarian findByEmail(String email) {
+        return librarianRepo
+                .findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Librarian not found !!"));
+    }
 }

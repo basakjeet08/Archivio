@@ -35,4 +35,10 @@ public class MemberService {
 
         return memberRepo.save(member);
     }
+
+    public Member findByUsername(String username) {
+        return memberRepo
+                .findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Member not Found !!"));
+    }
 }
