@@ -41,6 +41,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, UrlConstants.REGISTER_MEMBER).permitAll()
                                 .requestMatchers(HttpMethod.POST, UrlConstants.LOGIN_MEMBER).permitAll()
                                 .requestMatchers(HttpMethod.POST, UrlConstants.CREATE_BOOK).hasRole(UserRole.LIBRARIAN.name())
+                                .requestMatchers(HttpMethod.PUT, UrlConstants.PUT_BOOK).hasRole(UserRole.LIBRARIAN.name())
+                                .requestMatchers(HttpMethod.DELETE, UrlConstants.DELETE_BOOK_BY_ID).hasRole(UserRole.LIBRARIAN.name())
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

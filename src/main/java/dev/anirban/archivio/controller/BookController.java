@@ -43,4 +43,16 @@ public class BookController {
 
         return new ResponseWrapper<>(data);
     }
+
+    @PutMapping(UrlConstants.PUT_BOOK)
+    public ResponseWrapper<Book> update(@RequestBody Book book) {
+        Book data = service.update(book);
+        return new ResponseWrapper<>(data);
+    }
+
+    @DeleteMapping(UrlConstants.DELETE_BOOK_BY_ID)
+    public ResponseWrapper<Book> deleteById(@PathVariable Integer id) {
+        service.deleteById(id);
+        return new ResponseWrapper<>("Book is deleted Successfully !!");
+    }
 }

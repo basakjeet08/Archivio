@@ -48,4 +48,28 @@ public class BookService {
     public List<Book> findByTitle(String title) {
         return bookRepo.findByTitle(title);
     }
+
+    public Book update(Book book) {
+        Book savedBook = findById(book.getId());
+
+        if (book.getTitle() != null)
+            savedBook.setTitle(book.getTitle());
+        if (book.getPublicationYear() != null)
+            savedBook.setPublicationYear(book.getPublicationYear());
+        if (book.getEdition() != null)
+            savedBook.setEdition(book.getEdition());
+        if (book.getStatus() != null)
+            savedBook.setStatus(book.getStatus());
+
+        book.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
+
+        return bookRepo.save(savedBook);
+    }
+
+    public void deleteById(Integer id) {
+        if (!bookRepo.existsById(id))
+            throw new BookNotFound(id);
+
+        bookRepo.deleteById(id);
+    }
 }
