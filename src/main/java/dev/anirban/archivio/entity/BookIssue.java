@@ -19,7 +19,7 @@ public class BookIssue {
     public enum BookIssueStatus {
         PENDING,
         APPROVED, REJECTED,
-        RETURNED, NOT_RETURNED
+        RETURNED
     }
 
     @Id
@@ -35,9 +35,6 @@ public class BookIssue {
 
     @Column(name = "return_date")
     private Timestamp returnDate;
-
-    @Column(name = "fine")
-    private Integer fine;
 
     @Column(name = "status", nullable = false)
     private BookIssueStatus status;
@@ -83,12 +80,8 @@ public class BookIssue {
                 .issueDate(issueDate)
                 .dueDate(dueDate)
                 .returnDate(returnDate)
-                .fine(fine)
                 .status(status)
                 .book(book.toBookDto())
-                .requester(requester.toMemberDto())
-                .approvedBy(approvedBy == null ? null : approvedBy.toLibrarianDto())
-                .returnedBy(returnedBy == null ? null : returnedBy.toLibrarianDto())
                 .build();
     }
 }

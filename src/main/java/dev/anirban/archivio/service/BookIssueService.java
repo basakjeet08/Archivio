@@ -65,12 +65,11 @@ public class BookIssueService {
         if (savedIssue.getBook().getStatus() == Book.BookStatus.ISSUED && savedIssue.getApprovedBy() == null)
             throw new BookUnavailable(savedIssue.getBook().getId());
 
-        // Approving Book Issue
-        if (issueRequest.getApprovedByEmail() != null && savedIssue.getApprovedBy() == null)
+        if (issueRequest.getJob() == BookIssueRequest.RequestJob.APPROVE)
             approveBookIssue(issueRequest.getApprovedByEmail(), savedIssue);
-
-        // Returning Book Issue
-        if (issueRequest.getReturnedByEmail() != null && savedIssue.getReturnedBy() == null)
+        else if (issueRequest.getJob() == BookIssueRequest.RequestJob.REJECT)
+            rejectBookIssue(savedIssue);
+        else if (issueRequest.getJob() == BookIssueRequest.RequestJob.RETURN)
             returnBookIssue(issueRequest.getReturnedByEmail(), savedIssue);
 
         return bookIssueRepo.save(savedIssue);
@@ -86,6 +85,7 @@ public class BookIssueService {
         savedIssue.setStatus(BookIssue.BookIssueStatus.APPROVED);
         savedIssue.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
         approvedBy.addApprovedBooks(savedIssue);
+        savedIssue.getBook().setStatus(Book.BookStatus.ISSUED);
     }
 
     public void returnBookIssue(String returnedByEmail, BookIssue savedIssue) {
@@ -96,5 +96,12 @@ public class BookIssueService {
         savedIssue.setStatus(BookIssue.BookIssueStatus.RETURNED);
         savedIssue.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
         returnedBy.addReturnedBooks(savedIssue);
+        savedIssue.getBook().setStatus(Book.BookStatus.AVAILABLE);
+    }
+
+    public void rejectBookIssue(BookIssue savedIssue) {
+        savedIssue.setStatus(BookIssue.BookIssueStatus.REJECTED);
+        savedIssue.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        savedIssue.getBook().setStatus(Book.BookStatus.AVAILABLE);
     }
 }

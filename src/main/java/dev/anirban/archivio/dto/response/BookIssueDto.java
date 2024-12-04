@@ -16,10 +16,6 @@ public class BookIssueDto {
     private Timestamp issueDate;
     private Timestamp dueDate;
     private Timestamp returnDate;
-    private Integer fine;
     private BookIssue.BookIssueStatus status;
     private BookDto book;
-    private MemberDto requester;
-    private LibrarianDto approvedBy;
-    private LibrarianDto returnedBy;
 }
