@@ -1,6 +1,7 @@
 package dev.anirban.archivio.entity;
 
 
+import dev.anirban.archivio.dto.response.LibrarianDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -45,4 +46,15 @@ public class Librarian {
 
     @Column(name = "updatedAt", nullable = false)
     private Timestamp updatedAt;
+
+    public LibrarianDto toLibrarianDto() {
+        return LibrarianDto
+                .builder()
+                .id(id)
+                .name(name)
+                .email(email)
+                .joiningDate(joiningDate)
+                .salary(salary)
+                .build();
+    }
 }

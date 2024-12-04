@@ -1,6 +1,7 @@
 package dev.anirban.archivio.entity;
 
 
+import dev.anirban.archivio.dto.response.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -45,4 +46,15 @@ public class Member {
 
     @Column(name = "updatedAt", nullable = false)
     private Timestamp updatedAt;
+
+    public MemberDto toMemberDto() {
+        return MemberDto
+                .builder()
+                .id(id)
+                .name(name)
+                .email(email)
+                .username(username)
+                .avatar(avatar)
+                .build();
+    }
 }
