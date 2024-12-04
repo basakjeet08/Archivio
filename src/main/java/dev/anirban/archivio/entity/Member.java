@@ -41,10 +41,10 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private UserRole roles;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
     public MemberDto toMemberDto() {

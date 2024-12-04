@@ -31,7 +31,7 @@ public class Librarian {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "joiningDate", nullable = false)
+    @Column(name = "joining_date", nullable = false)
     private Timestamp joiningDate;
 
     @Column(name = "salary", nullable = false)
@@ -41,10 +41,10 @@ public class Librarian {
     @Enumerated(value = EnumType.STRING)
     private UserRole roles;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
     public LibrarianDto toLibrarianDto() {

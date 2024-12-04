@@ -9,4 +9,9 @@ public class UrlConstants {
     // Authentication Endpoints (Member)
     public static final String REGISTER_MEMBER = "/member/register";
     public static final String LOGIN_MEMBER = "/member/login";
+
+    // Book Endpoints
+    public static final String CREATE_BOOK = "/books";
+    public static final String FIND_BOOK_BY_ID = "/books/{id}";
+    public static final String FIND_BOOK_QUERY = "/books";
 }

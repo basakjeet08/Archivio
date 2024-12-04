@@ -2,6 +2,7 @@ package dev.anirban.archivio.security;
 
 
 import dev.anirban.archivio.constants.UrlConstants;
+import dev.anirban.archivio.entity.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,6 +40,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, UrlConstants.LOGIN_LIBRARIAN).permitAll()
                                 .requestMatchers(HttpMethod.POST, UrlConstants.REGISTER_MEMBER).permitAll()
                                 .requestMatchers(HttpMethod.POST, UrlConstants.LOGIN_MEMBER).permitAll()
+                                .requestMatchers(HttpMethod.POST, UrlConstants.CREATE_BOOK).hasRole(UserRole.LIBRARIAN.name())
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
