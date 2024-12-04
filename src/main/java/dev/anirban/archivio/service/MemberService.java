@@ -3,6 +3,8 @@ package dev.anirban.archivio.service;
 import dev.anirban.archivio.dto.request.AuthMemberDto;
 import dev.anirban.archivio.entity.Member;
 import dev.anirban.archivio.entity.UserRole;
+import dev.anirban.archivio.exception.MemberAlreadyExists;
+import dev.anirban.archivio.exception.MemberNotFound;
 import dev.anirban.archivio.repo.MemberRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +21,10 @@ public class MemberService {
     private final PasswordEncoder encoder;
 
     public Member create(AuthMemberDto memberDto) {
+
+        if (memberRepo.findByUsername(memberDto.getUsername()).isPresent())
+            throw new MemberAlreadyExists(memberDto.getUsername());
+
         String hashedPassword = encoder.encode(memberDto.getPassword());
 
         Member member = Member
@@ -39,6 +45,6 @@ public class MemberService {
     public Member findByUsername(String username) {
         return memberRepo
                 .findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Member not Found !!"));
+                .orElseThrow(() -> new MemberNotFound(username));
     }
 }

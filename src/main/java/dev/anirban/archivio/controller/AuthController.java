@@ -4,6 +4,7 @@ package dev.anirban.archivio.controller;
 import dev.anirban.archivio.constants.UrlConstants;
 import dev.anirban.archivio.dto.request.AuthLibrarianDto;
 import dev.anirban.archivio.dto.request.AuthMemberDto;
+import dev.anirban.archivio.dto.response.ResponseWrapper;
 import dev.anirban.archivio.dto.response.TokenWrapper;
 import dev.anirban.archivio.entity.Librarian;
 import dev.anirban.archivio.entity.Member;
@@ -20,22 +21,26 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(UrlConstants.REGISTER_LIBRARIAN)
-    public Librarian registerLibrarian(@RequestBody AuthLibrarianDto librarian) {
-        return authService.registerLibrarian(librarian);
+    public ResponseWrapper<Librarian> registerLibrarian(@RequestBody AuthLibrarianDto librarian) {
+        Librarian data = authService.registerLibrarian(librarian);
+        return new ResponseWrapper<>(data);
     }
 
     @PostMapping(UrlConstants.LOGIN_LIBRARIAN)
-    public TokenWrapper loginLibrarian(@RequestBody AuthLibrarianDto librarian) {
-        return authService.loginLibrarian(librarian);
+    public ResponseWrapper<TokenWrapper> loginLibrarian(@RequestBody AuthLibrarianDto librarian) {
+        TokenWrapper data = authService.loginLibrarian(librarian);
+        return new ResponseWrapper<>(data);
     }
 
     @PostMapping(UrlConstants.REGISTER_MEMBER)
-    public Member registerMember(@RequestBody AuthMemberDto member) {
-        return authService.registerMember(member);
+    public ResponseWrapper<Member> registerMember(@RequestBody AuthMemberDto member) {
+        Member data = authService.registerMember(member);
+        return new ResponseWrapper<>(data);
     }
 
     @PostMapping(UrlConstants.LOGIN_MEMBER)
-    public TokenWrapper loginMember(@RequestBody AuthMemberDto member) {
-        return authService.loginMember(member);
+    public ResponseWrapper<TokenWrapper> loginMember(@RequestBody AuthMemberDto member) {
+        TokenWrapper data = authService.loginMember(member);
+        return new ResponseWrapper<>(data);
     }
 }

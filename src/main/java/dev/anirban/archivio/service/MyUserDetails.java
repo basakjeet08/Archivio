@@ -1,8 +1,8 @@
 package dev.anirban.archivio.service;
 
-
 import dev.anirban.archivio.entity.Librarian;
 import dev.anirban.archivio.entity.Member;
+import dev.anirban.archivio.exception.DataNotFound;
 import dev.anirban.archivio.repo.LibrarianRepo;
 import dev.anirban.archivio.repo.MemberRepo;
 import lombok.RequiredArgsConstructor;
@@ -34,16 +34,15 @@ public class MyUserDetails implements UserDetailsService {
                     .roles(member.get().getRoles().name())
                     .build();
 
-        Optional<Librarian> librarian = librarianRepo.findByEmail(username);
-
-        if (librarian.isEmpty())
-            throw new RuntimeException("User not present");
+        Librarian librarian = librarianRepo
+                .findByEmail(username)
+                .orElseThrow(() -> new DataNotFound("User Not Found !!"));
 
         return User
                 .builder()
-                .username(librarian.get().getEmail())
-                .password(librarian.get().getPassword())
-                .roles(librarian.get().getRoles().name())
+                .username(librarian.getEmail())
+                .password(librarian.getPassword())
+                .roles(librarian.getRoles().name())
                 .build();
     }
 }
