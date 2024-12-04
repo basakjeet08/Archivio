@@ -25,13 +25,26 @@ public class BookIssueController {
 
     @GetMapping(UrlConstants.FIND_BOOK_ISSUE_QUERY)
     public ResponseWrapper<List<BookIssueDto>> findBookIssue(
-            @RequestParam(name = "status") BookIssue.BookIssueStatus status
+            @RequestParam(name = "requesterId" , required = false) Integer requesterId,
+            @RequestParam(name = "status" , required = false) BookIssue.BookIssueStatus status
     ) {
-        List<BookIssueDto> data = service
-                .findByStatus(status)
+
+        List<BookIssue> bookIssueList;
+
+        if (requesterId != null && status != null)
+            bookIssueList = service.findByRequester_IdAndStatus(requesterId, status);
+        else if (status != null)
+            bookIssueList = service.findByStatus(status);
+        else if (requesterId != null)
+            bookIssueList = service.findByRequester_Id(requesterId);
+        else
+            bookIssueList = service.findAll();
+
+        List<BookIssueDto> data = bookIssueList
                 .stream()
                 .map(BookIssue::toBookIssueDto)
                 .toList();
+
         return new ResponseWrapper<>(data);
     }
 

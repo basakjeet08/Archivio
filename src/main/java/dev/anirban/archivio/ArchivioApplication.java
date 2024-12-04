@@ -28,14 +28,17 @@ public class ArchivioApplication {
     public CommandLineRunner commandLineRunner() {
         return _ -> {
 
-            AuthMemberDto member = createAuthMember();
-            AuthLibrarianDto librarian = createAuthLibrarian();
+            for (int i = 1; i <= 5; i++) {
+                AuthLibrarianDto librarian = createAuthLibrarian(i);
+                authService.registerLibrarian(librarian);
+                authService.loginLibrarian(librarian);
+            }
 
-            authService.registerLibrarian(librarian);
-            authService.loginLibrarian(librarian);
-
-            authService.registerMember(member);
-            authService.loginMember(member);
+            for (int i = 1; i <= 5; i++) {
+                AuthMemberDto member = createAuthMember(i);
+                authService.registerMember(member);
+                authService.loginMember(member);
+            }
 
             for (int i = 0; i < 10; i++)
                 bookService.create(createBook(i));
@@ -43,23 +46,23 @@ public class ArchivioApplication {
     }
 
 
-    public AuthMemberDto createAuthMember() {
+    public AuthMemberDto createAuthMember(int i) {
         return AuthMemberDto
                 .builder()
-                .name("Member 01")
-                .username("Member 01 Username")
-                .email("member01@gmail.com")
-                .password("Member 01 Password")
-                .avatar("Member 01 Avatar")
+                .name("Member " + i)
+                .username("Member " + i + " Username")
+                .email("member" + i + "@gmail.com")
+                .password("Member " + i + " Password")
+                .avatar("Member " + i + " Avatar")
                 .build();
     }
 
-    public AuthLibrarianDto createAuthLibrarian() {
+    public AuthLibrarianDto createAuthLibrarian(int i) {
         return AuthLibrarianDto
                 .builder()
-                .name("Librarian 01")
-                .email("librarian01@gmail.com")
-                .password("Librarian 01 Password")
+                .name("Librarian " + i)
+                .email("librarian" + i + "@gmail.com")
+                .password("Librarian " + i + " Password")
                 .build();
     }
 

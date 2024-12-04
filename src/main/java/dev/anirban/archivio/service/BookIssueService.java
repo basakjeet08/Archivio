@@ -55,6 +55,18 @@ public class BookIssueService {
         return bookIssueRepo.findByStatus(status);
     }
 
+    public List<BookIssue> findAll() {
+        return bookIssueRepo.findAll();
+    }
+
+    public List<BookIssue> findByRequester_IdAndStatus(Integer requesterId, BookIssue.BookIssueStatus status) {
+        return bookIssueRepo.findByRequester_IdAndStatus(requesterId, status);
+    }
+
+    public List<BookIssue> findByRequester_Id(Integer requesterId) {
+        return bookIssueRepo.findByRequester_Id(requesterId);
+    }
+
     public BookIssue update(BookIssueRequest issueRequest) {
 
         // Check if the Book is Available anymore
